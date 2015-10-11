@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Spotify Test App</string>
+    <string name="search_tip">Artist name</string>
+    <string name="title_activity_detail">Album Link</string>
+
+    <!-- Artist text -->
+    <string name="popularity_content">Popularity: %1$d/100</string>
+    <string name="followers_content">Followers: %1$d</string>
+
+    <!-- Album properties -->
+    <string name="album_image_url">imageUrl</string>
+    <string name="album_link">link</string>
+    <string name="title_activity_link">Album Link</string>
+    <string name="action_settings">Settings</string>
+</resources>

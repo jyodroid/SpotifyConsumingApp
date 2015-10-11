@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/img_artist_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawingCacheQuality="auto"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_artist_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/abc_action_bar_content_inset_material"
+            android:textSize="@dimen/abc_dialog_padding_material" />
+
+        <TextView
+            android:id="@+id/txt_followers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:gravity="center|left|top"
+            android:paddingLeft="@dimen/abc_action_bar_content_inset_material"
+            android:textSize="@dimen/abc_dialog_padding_top_material" />
+
+        <TextView
+            android:id="@+id/txt_popularity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:gravity="center|left|top"
+            android:paddingLeft="@dimen/abc_action_bar_content_inset_material"
+            android:textSize="@dimen/abc_dialog_padding_top_material" />
+    </LinearLayout>
+</LinearLayout>
