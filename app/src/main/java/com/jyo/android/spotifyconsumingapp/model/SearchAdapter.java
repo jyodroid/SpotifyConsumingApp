@@ -77,19 +77,20 @@ public class SearchAdapter extends ArrayAdapter<AlbumSimple> {
 
             //If are less than the limit, Show the countries name
             StringBuilder builder = new StringBuilder("Countries availability: ");
-            StringBuilder countries = new StringBuilder();
             for (String countryCode: album.available_markets) {
                 try {
                     String countryName = CountryFinder.findCountryByCode(countryCode, context);
-                    countries.append(countryName);
-                    countries.append(" ");
+                    builder.append(countryName);
+                    builder.append(" - ");
                 } catch (JSONException e) {
                     Log.e(LOG_TAG, "Error Parsing ISO-3166-2 String", e);
                 }
             }
+            String countriesListStr = builder.toString().trim();
 
-            builder.append(countries.toString().trim().replace(" ", " - "));
-            viewHolder.countriesList.setText(builder.toString());
+            //Remove the last separator from the string
+            viewHolder.countriesList.setText(
+                    countriesListStr.substring(0, countriesListStr.length()-2).trim());
         }else {
             viewHolder.countriesList.setText("Available in more than 5 countries");
         }
@@ -99,7 +100,6 @@ public class SearchAdapter extends ArrayAdapter<AlbumSimple> {
         }else {
             viewHolder.thumbnail.setImageDrawable(
                     ContextCompat.getDrawable(context, R.drawable.no_image));
-
         }
 
         return item;

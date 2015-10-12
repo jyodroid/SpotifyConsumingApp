@@ -1,8 +1,6 @@
 package com.jyo.android.spotifyconsumingapp.connection;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -14,15 +12,10 @@ import android.widget.Toast;
 import com.jyo.android.spotifyconsumingapp.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.util.List;
-
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.Artist;
 import kaaes.spotify.webapi.android.models.ArtistsPager;
-import kaaes.spotify.webapi.android.models.Image;
 
 /**
  * Created by JohnTangarife on 10/10/15.
@@ -34,12 +27,10 @@ public class SearchArtistTask extends AsyncTask<String, Void, Artist> {
     private View mView;
     private Context context;
     private String artistName;
-    private Bitmap mArtistImage;
 
-    public SearchArtistTask(Context context, View view, Bitmap image){
+    public SearchArtistTask(Context context, View view){
         this.mView = view;
         this.context = context;
-        this.mArtistImage = image;
     }
 
     @Override
@@ -55,13 +46,6 @@ public class SearchArtistTask extends AsyncTask<String, Void, Artist> {
             if (0 == artists.artists.items.size()){
                 return null;
             }else {
-                List<Image> images =  artists.artists.items.get(0).images;
-                if(images.size()>0){
-                    InputStream inputStream =
-                            new URL(images.get(0).url).openStream();
-                    mArtistImage = BitmapFactory.decodeStream(inputStream);
-                }
-
                 return artists.artists.items.get(0);
             }
         }catch (Exception e){

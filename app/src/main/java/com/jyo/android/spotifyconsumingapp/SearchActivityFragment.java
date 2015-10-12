@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
@@ -31,6 +32,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import kaaes.spotify.webapi.android.models.AlbumSimple;
+import kaaes.spotify.webapi.android.models.Image;
 
 public class SearchActivityFragment extends Fragment {
 
@@ -44,7 +46,6 @@ public class SearchActivityFragment extends Fragment {
 
     private SearchAdapter searchAdapter;
     private String artistName;
-    private Bitmap mArtistImage;
     private ViewHolder mViewHolder;
     private ArtistViewHolder mArtistViewHolder;
     private SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener;
@@ -99,20 +100,24 @@ public class SearchActivityFragment extends Fragment {
 
                 if (!searchAdapter.isEmpty()) {
 
-                    if (position != 0) {
+                    if (view != artistView) {
                         Intent detailActivityIntent = new Intent(context, LinkActivity.class);
 
+                        //Adjust view position removing the header with artist info position
+                        int adjPosition = position -1;
+
                         //If there is a image
-                        if (0 < searchAdapter.getItem(position).images.size()) {
+                        List<Image> images = searchAdapter.getItem(adjPosition).images;
+                        if (0 < images.size()) {
 
                             detailActivityIntent.putExtra(getString(R.string.album_image_url),
-                                    searchAdapter.getItem(position).images.get(0).url);
+                                    images.get(0).url);
                         }
 
                         //If spotify link exists
-                        if (!searchAdapter.getItem(position).external_urls.get(SPOTIFY_KEY).isEmpty()) {
-                            detailActivityIntent.putExtra(getString(R.string.album_link),
-                                    searchAdapter.getItem(position).external_urls.get(SPOTIFY_KEY));
+                        String url = searchAdapter.getItem(adjPosition).external_urls.get(SPOTIFY_KEY);
+                        if (!url.isEmpty()) {
+                            detailActivityIntent.putExtra(getString(R.string.album_link), url);
                         }
                         startActivity(detailActivityIntent);
                     }
@@ -123,7 +128,7 @@ public class SearchActivityFragment extends Fragment {
     }
 
     private void updateArtist(Context context, View view){
-        SearchArtistTask fetchArtistTask = new SearchArtistTask(context, view, mArtistImage);
+        SearchArtistTask fetchArtistTask = new SearchArtistTask(context, view);
         fetchArtistTask.execute(artistName);
     }
 
@@ -181,9 +186,13 @@ public class SearchActivityFragment extends Fragment {
                 ARTIST_POPULARITY,
                 mArtistViewHolder.artistPopularity.getText().toString());
 
+        BitmapDrawable bitmapDrawable =
+                ((BitmapDrawable) mArtistViewHolder.artistImage.getDrawable());
+        Bitmap bitmap = bitmapDrawable .getBitmap();
+
         outState.putParcelable(
                 ARTIST_IMAGE,
-                mArtistImage);
+                bitmap);
     }
 
     @Override
