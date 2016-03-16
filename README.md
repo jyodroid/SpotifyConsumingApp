@@ -16,3 +16,6 @@ Aditionally the Libraries used:
   +Scroll down to explore albums from this artist
   +select one album and touch over
   +touch the button to go to spotify album page
+  
+### License
+Project under [MIT License](https://opensource.org/licenses/MIT)
